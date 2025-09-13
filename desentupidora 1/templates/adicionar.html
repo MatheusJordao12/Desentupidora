@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Ordem de Serviço</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            width: 300px;
+        }
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adicionar Ordem de Serviço</h1>
+
+    <!-- Formulário -->
+    <form method="POST" action="{{ url_for('adicionar') }}">
+        <input type="text" name="cliente" placeholder="Nome do cliente" required><br>
+        <input type="text" name="servico" placeholder="Serviço" required><br>
+        <button type="submit">Salvar</button>
+    </form>
+
+    <a href="{{ url_for('index') }}">← Voltar para lista de OS</a>
+</body>
+</html>

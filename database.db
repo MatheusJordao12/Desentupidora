@@ -1,0 +1,35 @@
+-- Tabela de clientes
+CREATE TABLE IF NOT EXISTS clientes (
+    id TEXT PRIMARY KEY,
+    nome TEXT NOT NULL,
+    telefone TEXT NOT NULL,
+    endereco TEXT NOT NULL
+);
+
+-- Tabela de ordens de serviço
+CREATE TABLE IF NOT EXISTS ordens (
+    id TEXT PRIMARY KEY,
+    cliente_id TEXT NOT NULL,
+    servico TEXT NOT NULL,
+    status TEXT NOT NULL, -- pendente ou finalizado
+    data TEXT NOT NULL,
+    FOREIGN KEY(cliente_id) REFERENCES clientes(id)
+);
+
+-- Tabela financeira
+CREATE TABLE IF NOT EXISTS financeiro (
+    id TEXT PRIMARY KEY,
+    tipo TEXT NOT NULL,       -- entrada ou saida
+    descricao TEXT NOT NULL,
+    valor REAL NOT NULL,
+    data TEXT NOT NULL
+);
+
+-- Tabela de usuários
+CREATE TABLE IF NOT EXISTS usuarios (
+    id TEXT PRIMARY KEY,
+    username TEXT NOT NULL,
+    senha TEXT NOT NULL,
+    tipo TEXT NOT NULL        -- admin ou atendente
+);
+
