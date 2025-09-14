@@ -54,7 +54,7 @@ def login():
         user = get_user(username, senha)
         if user:
             session["user"] = {"id": user[0], "username": user[1], "tipo": user[3]}
-            return redirect(url_for("index"))
+            return redirect(url_for("index.html"))
         else:
             return "Usuário ou senha inválidos"
     return render_template("login.html")
