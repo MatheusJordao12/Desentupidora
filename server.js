@@ -11,7 +11,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const USERS = [
     { username: 'admin', password: '123456' },
+    
 ];
+
+
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
