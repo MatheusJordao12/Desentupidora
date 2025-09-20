@@ -1,0 +1,16 @@
+ body { font-family: Arial; 
+    margin: 40px;
+}
+input { padding: 8px; 
+    margin: 5px 0; 
+    width: 300px; 
+}
+button { 
+    padding: 8px 12px; 
+    cursor: pointer; 
+}
+a{ 
+    display: inline-block; 
+    margin-top: 15px; color: blue; 
+    text-decoration: none; 
+}

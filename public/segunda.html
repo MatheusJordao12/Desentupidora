@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Ordens de Serviço</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <h1>Ordens de Serviço</h1>
+    <p>Olá, {{ user.username }} | <a href="{{ url_for('logout') }}">Sair</a></p>
+    <a href="add.html">➕ Adicionar Ordem</a>
+    <a href="financeiro.html">💰 Financeiro</a>
+
+    <table>
+        <tr>
+            <th>Cliente</th>
+            <th>Serviço</th>
+            <th>Status</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+        {% for os in ordens %}
+        <tr>
+            <td>{{ os[1] }}</td>
+            <td>{{ os[2] }}</td>
+            <td>{{ os[3] }}</td>
+            <td>{{ os[4] }}</td>
+            <td>
+                {% if os[3] != 'finalizado' %}
+                    <a href="{{ url_for('finalizar', id=os[0]) }}"><button>Finalizar</button></a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
