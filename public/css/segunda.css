@@ -1,23 +1,48 @@
-    body {
+ body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
-      padding: 20px;
+      padding: 0;
+      margin: 0;
     }
+    /* Barra de navegação */
+    nav {
+      background: #007bff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
     h1, h2 {
       text-align: center;
+      margin-top: 20px;
     }
+
     form {
       max-width: 500px;
-      margin: 0 auto 20px auto;
+      margin: 20px auto;
       padding: 15px;
       background: #fff;
       border-radius: 10px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
     form input, form select, form button {
-      width: 95%;
-      padding: 7px;
-      margin: 3px 0;
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
@@ -30,10 +55,11 @@
     form button:hover {
       background: #218838;
     }
+
     table {
       border-collapse: collapse;
       width: 90%;
-      margin: 0 auto;
+      margin: 0 auto 30px auto;
       background: #fff;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
@@ -56,25 +82,3 @@
     .btn-finalizar:hover {
       background: #0056b3;
     }
-     nav {
-      background: #007bff;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      padding: 8px 12px;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    nav a:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    
-
