@@ -3,35 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Ordens de Serviço</title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="css/segunda.css">
 </head>
 <body>
-    <h1>Ordens de Serviço</h1>
-    <p>Olá, {{ user.username }} | <a href="{{ url_for('logout') }}">Sair</a></p>
+    <nav>
     <a href="add.html">➕ Adicionar Ordem</a>
     <a href="financeiro.html">💰 Financeiro</a>
+  </nav>
+    <a href="index.html"><button sair="">Sair</button></a><h1>Ordens de Serviço</h1>
 
-    <table>
-        <tr>
-            <th>Cliente</th>
-            <th>Serviço</th>
-            <th>Status</th>
-            <th>Data</th>
-            <th>Ações</th>
-        </tr>
-        {% for os in ordens %}
-        <tr>
-            <td>{{ os[1] }}</td>
-            <td>{{ os[2] }}</td>
-            <td>{{ os[3] }}</td>
-            <td>{{ os[4] }}</td>
-            <td>
-                {% if os[3] != 'finalizado' %}
-                    <a href="{{ url_for('finalizar', id=os[0]) }}"><button>Finalizar</button></a>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+  <h2>Adicionar nova ordem</h2>
+  <form id="form-os">
+    <input type="text" id="cliente" placeholder="Nome do Cliente" required>
+    <select id="status" required>
+      <option value="">Selecione o status</option>
+      <option value="aberto">Aberto</option>
+      <option value="em andamento">Em andamento</option>
+      <option value="finalizado">Finalizado</option>
+    </select>
+    <input type="date" id="data" required>
+    <button type="submit">Adicionar</button>
+  </form>
+    
+
+    
+  <table id="tabela">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Status</th>
+        <th>Data</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- preenchido pelo JS -->
+    </tbody>
+  </table>
+
+    <script>
+    // Recupera ordens do localStorage ou cria vazio
+    let ordens = JSON.parse(localStorage.getItem("ordens")) || [];
+
+    const tbody = document.querySelector("#tabela tbody");
+    const form = document.getElementById("form-os");
+
+    // Renderiza a tabela
+    function renderTabela() {
+      tbody.innerHTML = "";
+      ordens.forEach((os, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${os.id}</td>
+          <td>${os.cliente}</td>
+          <td>${os.status}</td>
+          <td>${os.data}</td>
+          <td>
+            ${os.status !== "finalizado" ? `<button class="btn-finalizar" onclick="finalizar(${index})">Finalizar</button>` : ""}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Adiciona nova OS
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const cliente = document.getElementById("cliente").value;
+      const status = document.getElementById("status").value;
+      const data = document.getElementById("data").value;
+
+      const novaOS = {
+        id: ordens.length + 1,
+        cliente,
+        status,
+        data
+      };
+
+      ordens.push(novaOS);
+      localStorage.setItem("ordens", JSON.stringify(ordens));
+
+      form.reset();
+      renderTabela();
+    });
+
+    // Finaliza OS
+    function finalizar(index) {
+      ordens[index].status = "finalizado";
+      localStorage.setItem("ordens", JSON.stringify(ordens));
+      renderTabela();
+    }
+
+    // Exibe tabela ao carregar página
+    renderTabela();
+  </script>
 </body>
 </html>

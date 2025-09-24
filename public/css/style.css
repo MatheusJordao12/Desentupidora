@@ -17,7 +17,7 @@
 .fundo {
     padding: 10px;
     margin-top: 5px;
-    background-color: rgb(27, 27, 51);
+    background-color: rgb(27, 94, 38);
           
 }
 
@@ -34,7 +34,7 @@
     font-family: 'Montserrat', sans-serif;
     color: white;
     font-size: 20px;
-    background-color: rgb(50, 50, 95);
+    background-color: rgb();
     border: none;
     margin-top: 5px;
     position: center;
@@ -70,7 +70,7 @@ button{
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: rgb(27, 27, 51);
+    background-color: rgb(27, 94, 38);
     color: white;
     font-size: 18px;
     cursor: pointer;

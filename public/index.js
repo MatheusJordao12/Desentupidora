@@ -30,3 +30,4 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         message.textContent = 'Erro ao se conectar ao servidor'
     }
 });
+
