@@ -1,41 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Financeiro</title>
-    <link rel="stylesheet" href="css/financeiro.css">
+  <meta charset="UTF-8">
+  <title>💰 Financeiro</title>
+<link rel="stylesheet" href="css/financeiro.css">
 </head>
 <body>
-    <h1>Financeiro</h1>
-    <a href="segunda.html">← Voltar para OS</a>
+  <!-- Barra de navegação -->
+  <nav>
+    <a href="segunda.html">📋 Ordens</a>
+    <a href="emi.html">➕ Emissão de Relatórios</a>
+  </nav>
 
-    <h2>Registrar Entrada/Saída</h2>
-    <form method="POST" action="{{ url_for('financeiro') }}">
-        <select name="tipo" required>
-            <option value="entrada">Entrada</option>
-            <option value="saida">Saída</option>
-        </select><br>
-        <input type="text" name="descricao" placeholder="Descrição" required><br>
-        <input type="number" step="0.01" name="valor" placeholder="Valor (R$)" required><br>
-        <button type="submit">Registrar</button>
-    </form>
+  <h1>💰 Financeiro</h1>
 
-    <h2>Registros</h2>
-    <table>
-        <tr>
-            <th>Tipo</th>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Data</th>
-        </tr>
-        {% for r in registros %}
-        <tr>
-            <td>{{ r[1] }}</td>
-            <td>{{ r[2] }}</td>
-            <td>{{ r[3] }}</td>
-            <td>{{ r[4] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+  <h2>Registrar entrada/saída</h2>
+  <form id="form-financeiro">
+    <input type="text" id="descricao" placeholder="Descrição" required>
+    <input type="number" id="valor" placeholder="Valor (ex: 100.50)" step="0.01" required>
+    <select id="tipo" required>
+      <option value="">Selecione o tipo</option>
+      <option value="entrada">Entrada</option>
+      <option value="saida">Saída</option>
+    </select>
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <div class="saldo">
+    Saldo atual: <span id="saldo">R$ 0,00</span>
+  </div>
+
+  <h2>Movimentações</h2>
+  <table id="tabela-financeiro">
+    <thead>
+      <tr>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Tipo</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- preenchido pelo JS -->
+    </tbody>
+  </table>
+
+  <script>
+    // Recupera movimentações do localStorage
+    let movimentacoes = JSON.parse(localStorage.getItem("financeiro")) || [];
+
+    const tbody = document.querySelector("#tabela-financeiro tbody");
+    const form = document.getElementById("form-financeiro");
+    const saldoEl = document.getElementById("saldo");
+
+    // Renderizar tabela e saldo
+    function renderFinanceiro() {
+      tbody.innerHTML = "";
+      let saldo = 0;
+
+      movimentacoes.forEach((mov, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${mov.descricao}</td>
+          <td>R$ ${mov.valor.toFixed(2)}</td>
+          <td>${mov.tipo}</td>
+          <td><button onclick="remover(${index})">🗑️ Excluir</button></td>
+        `;
+        tbody.appendChild(tr);
+
+        if (mov.tipo === "entrada") {
+          saldo += mov.valor;
+        } else {
+          saldo -= mov.valor;
+        }
+      });
+
+      saldoEl.textContent = "R$ " + saldo.toFixed(2);
+      saldoEl.className = saldo >= 0 ? "positivo" : "negativo";
+    }
+
+    // Adicionar movimentação
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const descricao = document.getElementById("descricao").value;
+      const valor = parseFloat(document.getElementById("valor").value);
+      const tipo = document.getElementById("tipo").value;
+
+      movimentacoes.push({ descricao, valor, tipo });
+      localStorage.setItem("financeiro", JSON.stringify(movimentacoes));
+
+      form.reset();
+      renderFinanceiro();
+    });
+
+    // Remover movimentação
+    function remover(index) {
+      movimentacoes.splice(index, 1);
+      localStorage.setItem("financeiro", JSON.stringify(movimentacoes));
+      renderFinanceiro();
+    }
+
+    // Inicializa
+    renderFinanceiro();
+  </script>
 </body>
 </html>

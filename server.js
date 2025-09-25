@@ -10,9 +10,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const USERS = [
-    { username: 'admin' , password: '123456' },
-    
+    { username: 'admin', password: '123456' },
 ];
+
 
 
 
