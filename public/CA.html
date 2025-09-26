@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/CA.css".css">
+  <title>➕ Cadastro de Atendimento</title>
+</head>
+<body>
+  <header>
+    <h1>➕ Cadastro de Atendimento</h1>
+  </header>
+
+  <nav>
+    <a href="emi.html">📑 Emissão de Relatórios</a>
+    <a href="financeiro.html">💰 Financeiro</a>
+    <a href="segunda.html">📋 Ordens</a>
+    <a href="hist.html">🕑 Histórico de Atendimento</a>
+  </nav>
+
+  <main>
+    <h2>Preencha os dados do atendimento</h2>
+    <form id="formCadastro">
+      <div>
+        <label for="cliente">Nome do Cliente:</label>
+        <input type="text" id="cliente" name="cliente" required>
+      </div>
+
+      <div>
+        <label for="telefone">Telefone:</label>
+        <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999" required>
+      </div>
+
+      <div>
+        <label for="descricao">Descrição do Atendimento:</label>
+        <textarea id="descricao" name="descricao" rows="4" required></textarea>
+      </div>
+
+      <div>
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+          <option value="">Selecione</option>
+          <option value="Concluído">✅ Concluído</option>
+          <option value="Pendente">⏳ Pendente</option>
+          <option value="Cancelado">❌ Cancelado</option>
+        </select>
+      </div>
+
+      <button type="submit">Salvar Atendimento</button>
+    </form>
+
+    <h2>Histórico de Atendimentos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Cliente</th>
+          <th>Telefone</th>
+          <th>Descrição</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="listaAtendimentos">
+        <tr class="no-data"><td colspan="5">Nenhum atendimento registrado</td></tr>
+      </tbody>
+    </table>
+    <button class="btn-clear" onclick="limparHistorico()">🗑️ Limpar Histórico</button>
+
+    <p class="msg" id="mensagem"></p>
+  </main>
+
+  <script>
+    const form = document.getElementById("formCadastro");
+    const msg = document.getElementById("mensagem");
+    const lista = document.getElementById("listaAtendimentos");
+
+    function carregarAtendimentos() {
+      const atendimentos = JSON.parse(localStorage.getItem("atendimentos")) || [];
+
+      lista.innerHTML = "";
+
+      if (atendimentos.length === 0) {
+        lista.innerHTML = `<tr class="no-data"><td colspan="5">Nenhum atendimento registrado</td></tr>`;
+        return;
+      }
+
+      atendimentos.forEach(at => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${at.data}</td>
+          <td>${at.cliente}</td>
+          <td>${at.telefone}</td>
+          <td>${at.descricao}</td>
+          <td>${at.status}</td>
+        `;
+        lista.appendChild(tr);
+      });
+    }
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const cliente = document.getElementById("cliente").value;
+      const telefone = document.getElementById("telefone").value;
+      const descricao = document.getElementById("descricao").value;
+      const status = document.getElementById("status").value;
+      const data = new Date().toLocaleString("pt-BR");
+
+      const atendimento = { cliente, telefone, descricao, status, data };
+
+      let atendimentos = JSON.parse(localStorage.getItem("atendimentos")) || [];
+      atendimentos.push(atendimento);
+      localStorage.setItem("atendimentos", JSON.stringify(atendimentos));
+
+      msg.textContent = `✅ Atendimento de ${cliente} cadastrado com sucesso!`;
+      msg.style.color = "green";
+
+      form.reset();
+      carregarAtendimentos();
+    });
+
+    function limparHistorico() {
+      if (confirm("Tem certeza que deseja apagar todo o histórico?")) {
+        localStorage.removeItem("atendimentos");
+        carregarAtendimentos();
+      }
+    }
+
+    // Carrega os atendimentos ao abrir a página
+    carregarAtendimentos();
+  </script>
+</body>
+</html>
