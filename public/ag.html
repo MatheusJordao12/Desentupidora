@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/ag.css">
+  <title>📅 Agenda de Serviços</title>
+  
+</head>
+<body>
+  <header>
+    <h1>📅 Agenda de Serviços</h1>
+  </header>
+
+  <nav>
+     <a href="emi.html">➕ Emissão de Relatórios</a>
+    <a href="financeiro.html">💰 Financeiro</a>
+    <a href="hist.html">🕑 Histórico de Atendimento</a>
+    <a href="CA.html">➕ Cadastro de Atendimento</a>
+    <a href="ci.html">📋 Cadastro de Clientes</a>
+    <a href="rc.html">📞 Chamados</a>
+    <a href="segunda.html">📋 Ordens</a>
+    
+  </nav>
+
+  <main>
+    <h2>Novo Agendamento</h2>
+    <form id="formAgenda">
+      <label for="cliente">Cliente:</label>
+      <input type="text" id="cliente" required>
+
+      <label for="servico">Serviço:</label>
+      <input type="text" id="servico" required>
+
+      <label for="data">Data:</label>
+      <input type="date" id="data" required>
+
+      <label for="hora">Horário:</label>
+      <input type="time" id="hora" required>
+
+      <label for="responsavel">Responsável:</label>
+      <input type="text" id="responsavel" required>
+
+      <label for="observacoes">Observações:</label>
+      <textarea id="observacoes" rows="3"></textarea>
+
+      <button type="submit">Salvar Agendamento</button>
+    </form>
+
+    <h2>Agenda de Serviços</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Serviço</th>
+          <th>Data</th>
+          <th>Horário</th>
+          <th>Responsável</th>
+          <th>Observações</th>
+        </tr>
+      </thead>
+      <tbody id="listaAgenda">
+        <tr class="no-data"><td colspan="6">Nenhum serviço agendado</td></tr>
+      </tbody>
+    </table>
+
+    <button class="btn-clear" onclick="limparAgenda()">🗑️ Limpar Agenda</button>
+    <p class="msg" id="mensagem"></p>
+  </main>
+
+  <script>
+    const form = document.getElementById("formAgenda");
+    const lista = document.getElementById("listaAgenda");
+    const msg = document.getElementById("mensagem");
+
+    function carregarAgenda() {
+      const agenda = JSON.parse(localStorage.getItem("agendaServicos")) || [];
+      lista.innerHTML = "";
+
+      if (agenda.length === 0) {
+        lista.innerHTML = `<tr class="no-data"><td colspan="6">Nenhum serviço agendado</td></tr>`;
+        return;
+      }
+
+      agenda.forEach(a => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${a.cliente}</td>
+          <td>${a.servico}</td>
+          <td>${a.data}</td>
+          <td>${a.hora}</td>
+          <td>${a.responsavel}</td>
+          <td>${a.observacoes}</td>
+        `;
+        lista.appendChild(tr);
+      });
+    }
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const agendamento = {
+        cliente: document.getElementById("cliente").value,
+        servico: document.getElementById("servico").value,
+        data: document.getElementById("data").value,
+        hora: document.getElementById("hora").value,
+        responsavel: document.getElementById("responsavel").value,
+        observacoes: document.getElementById("observacoes").value
+      };
+
+      let agenda = JSON.parse(localStorage.getItem("agendaServicos")) || [];
+      agenda.push(agendamento);
+      localStorage.setItem("agendaServicos", JSON.stringify(agenda));
+
+      msg.textContent = `✅ Serviço para ${agendamento.cliente} agendado com sucesso!`;
+      msg.style.color = "green";
+
+      form.reset();
+      carregarAgenda();
+    });
+
+    function limparAgenda() {
+      if (confirm("Deseja apagar todos os agendamentos?")) {
+        localStorage.removeItem("agendaServicos");
+        carregarAgenda();
+      }
+    }
+
+    carregarAgenda();
+  </script>
+</body>
+</html>
