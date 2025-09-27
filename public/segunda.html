@@ -7,107 +7,116 @@
 </head>
 <body>
     <nav>
-    <a href="emi.html">➕ Emissão de Relatórios</a>
-    <a href="financeiro.html">💰 Financeiro</a>
-    <a href="hist.html">🕑 Histórico de Atendimento</a>
-    <a href="CA.html">➕ Cadastro de Atendimento</a>
-    <a href="ci.html">📋 Cadastro de Clientes</a>
-    <a href="rc.html">📞 Chamados</a> 
-    <a href="ag.html">📅 Agenda</a>
-  </nav>
+        <a href="emi.html">➕ Emissão de Relatórios</a>
+        <a href="financeiro.html">💰 Financeiro</a>
+        <a href="hist.html">🕑 Histórico de Atendimento</a>
+        <a href="CA.html">➕ Cadastro de Atendimento</a>
+        <a href="ci.html">📋 Cadastro de Clientes</a>
+        <a href="rc.html">📞 Chamados</a> 
+        <a href="ag.html">📅 Agenda</a>
+    </nav>
     
-      <a href="index.html">
-  <button class="btn-sair">Sair</button>
-</a>
+    <a href="index.html">
+        <button class="btn-sair">Sair</button>
+    </a>
 
-    
-   <h1>Ordens de Serviço</h1>
-  <h2>Adicionar nova ordem</h2>
-  <form id="form-os">
-    <input type="text" id="cliente" placeholder="Nome do Cliente" required>
-    <select id="status" required>
-      <option value="">Selecione o status</option>
-      <option value="aberto">Aberto</option>
-      <option value="em andamento">Em andamento</option>
-      <option value="finalizado">Finalizado</option>
-    </select>
-    <input type="date" id="data" required>
-    <button type="submit">Adicionar</button>
-  </form>
-    
+    <h1>Ordens de Serviço</h1>
+    <h2>Adicionar nova ordem</h2>
+    <form id="form-os">
+        <input type="text" id="cliente" placeholder="Nome do Cliente" required>
+        <select id="status" required>
+            <option value="">Selecione o status</option>
+            <option value="aberto">Aberto</option>
+            <option value="em andamento">Em andamento</option>
+            <option value="finalizado">Finalizado</option>
+        </select>
+        <input type="date" id="data" required>
+        <button type="submit">Adicionar</button>
+    </form>
 
-    
-  <table id="tabela">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Cliente</th>
-        <th>Status</th>
-        <th>Data</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- preenchido pelo JS -->
-    </tbody>
-  </table>
+    <table id="tabela">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- preenchido pelo JS -->
+        </tbody>
+    </table>
 
     <script>
-    // Recupera ordens do localStorage ou cria vazio
-    let ordens = JSON.parse(localStorage.getItem("ordens")) || [];
+        // Recupera ordens do localStorage ou cria vazio
+        let ordens = JSON.parse(localStorage.getItem("ordens")) || [];
 
-    const tbody = document.querySelector("#tabela tbody");
-    const form = document.getElementById("form-os");
+        const tbody = document.querySelector("#tabela tbody");
+        const form = document.getElementById("form-os");
 
-    // Renderiza a tabela
-    function renderTabela() {
-      tbody.innerHTML = "";
-      ordens.forEach((os, index) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${os.id}</td>
-          <td>${os.cliente}</td>
-          <td>${os.status}</td>
-          <td>${os.data}</td>
-          <td>
-            ${os.status !== "finalizado" ? `<button class="btn-finalizar" onclick="finalizar(${index})">Finalizar</button>` : ""}
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+        // Renderiza a tabela
+        function renderTabela() {
+            tbody.innerHTML = "";
+            ordens.forEach((os, index) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${os.id}</td>
+                    <td>${os.cliente}</td>
+                    <td>${os.status}</td>
+                    <td>${os.data}</td>
+                    <td>
+                        ${os.status !== "finalizado" ? `<button class="btn-finalizar" onclick="finalizar(${index})">Finalizar</button>` : ""}
+                        <button class="btn-excluir" onclick="excluir(${index})">Excluir</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-    // Adiciona nova OS
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+        // Adiciona nova OS
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
 
-      const cliente = document.getElementById("cliente").value;
-      const status = document.getElementById("status").value;
-      const data = document.getElementById("data").value;
+            const cliente = document.getElementById("cliente").value;
+            const status = document.getElementById("status").value;
+            const data = document.getElementById("data").value;
 
-      const novaOS = {
-        id: ordens.length + 1,
-        cliente,
-        status,
-        data
-      };
+            const novaOS = {
+                id: ordens.length + 1,
+                cliente,
+                status,
+                data
+            };
 
-      ordens.push(novaOS);
-      localStorage.setItem("ordens", JSON.stringify(ordens));
+            ordens.push(novaOS);
+            localStorage.setItem("ordens", JSON.stringify(ordens));
 
-      form.reset();
-      renderTabela();
-    });
+            form.reset();
+            renderTabela();
+        });
 
-    // Finaliza OS
-    function finalizar(index) {
-      ordens[index].status = "finalizado";
-      localStorage.setItem("ordens", JSON.stringify(ordens));
-      renderTabela();
-    }
+        // Finaliza OS
+        function finalizar(index) {
+            ordens[index].status = "finalizado";
+            localStorage.setItem("ordens", JSON.stringify(ordens));
+            renderTabela();
+        }
 
-    // Exibe tabela ao carregar página
-    renderTabela();
-  </script>
+        // Exclui OS
+        function excluir(index) {
+            if (confirm("Tem certeza que deseja excluir esta Ordem de Serviço?")) {
+                ordens.splice(index, 1);
+                // Reorganiza IDs
+                ordens = ordens.map((os, i) => ({ ...os, id: i + 1 }));
+                localStorage.setItem("ordens", JSON.stringify(ordens));
+                renderTabela();
+            }
+        }
+
+        // Exibe tabela ao carregar página
+        renderTabela();
+    </script>
 </body>
 </html>
