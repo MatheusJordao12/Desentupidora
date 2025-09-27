@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/ci.css">
+  <title>📋 Cadastro de Clientes</title>
+</head>
+<body>
+  <header>
+    <h1>📋 Cadastro de Clientes</h1>
+  </header>
+
+  <nav>
+    <a href="emi.html">➕ Emissão de Relatórios</a>
+    <a href="financeiro.html">💰 Financeiro</a>
+    <a href="hist.html">🕑 Histórico de Atendimento</a>
+    <a href="CA.html">➕ Cadastro de Atendimento</a>
+    <a href="segunda.html">📋 Ordens</a>
+    <a href="rc.html">📞 Chamados</a>
+  </nav>
+  
+
+  <main>
+    <h2>Novo Cliente</h2>
+    <form id="formCliente">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" required>
+
+      <label for="telefone">Telefone:</label>
+      <input type="tel" id="telefone" placeholder="(99) 99999-9999" required>
+
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" placeholder="exemplo@email.com">
+
+      <label for="endereco">Endereço:</label>
+      <input type="text" id="endereco">
+
+      <label for="observacoes">Observações:</label>
+      <textarea id="observacoes" rows="3"></textarea>
+
+      <button type="submit">Salvar Cliente</button>
+    </form>
+
+    <h2>Lista de Clientes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Telefone</th>
+          <th>E-mail</th>
+          <th>Endereço</th>
+          <th>Observações</th>
+        </tr>
+      </thead>
+      <tbody id="listaClientes">
+        <tr class="no-data"><td colspan="5">Nenhum cliente cadastrado</td></tr>
+      </tbody>
+    </table>
+
+    <button class="btn-clear" onclick="limparClientes()">🗑️ Limpar Lista</button>
+    <p class="msg" id="mensagem"></p>
+  </main>
+
+  <script>
+    const form = document.getElementById("formCliente");
+    const lista = document.getElementById("listaClientes");
+    const msg = document.getElementById("mensagem");
+
+    function carregarClientes() {
+      const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+      lista.innerHTML = "";
+
+      if (clientes.length === 0) {
+        lista.innerHTML = `<tr class="no-data"><td colspan="5">Nenhum cliente cadastrado</td></tr>`;
+        return;
+      }
+
+      clientes.forEach(c => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${c.nome}</td>
+          <td>${c.telefone}</td>
+          <td>${c.email}</td>
+          <td>${c.endereco}</td>
+          <td>${c.observacoes}</td>
+        `;
+        lista.appendChild(tr);
+      });
+    }
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const cliente = {
+        nome: document.getElementById("nome").value,
+        telefone: document.getElementById("telefone").value,
+        email: document.getElementById("email").value,
+        endereco: document.getElementById("endereco").value,
+        observacoes: document.getElementById("observacoes").value
+      };
+
+      let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+      clientes.push(cliente);
+      localStorage.setItem("clientes", JSON.stringify(clientes));
+
+      msg.textContent = `✅ Cliente ${cliente.nome} cadastrado com sucesso!`;
+      msg.style.color = "green";
+
+      form.reset();
+      carregarClientes();
+    });
+
+    function limparClientes() {
+      if (confirm("Deseja apagar todos os clientes cadastrados?")) {
+        localStorage.removeItem("clientes");
+        carregarClientes();
+      }
+    }
+
+    carregarClientes();
+  </script>
+</body>
+</html>
