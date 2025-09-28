@@ -1,14 +1,14 @@
 body {
       font-family: Arial, sans-serif;
-      background: #f7f7f7;
+      background: #f4f6f9;
       margin: 0;
       padding: 0;
     }
     header {
       background: #2c3e50;
       color: white;
-      padding: 15px;
       text-align: center;
+      padding: 15px;
     }
     nav {
       background: #34495e;
@@ -22,101 +22,68 @@ body {
       font-weight: bold;
     }
     main {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 20px auto;
       background: white;
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     h2 {
-      margin-top: 0;
       text-align: center;
       color: #2c3e50;
     }
     form {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       gap: 15px;
       margin-bottom: 25px;
     }
     label {
+      width: 100%;
       font-weight: bold;
-      color: #333;
-      margin-top: 10px;
     }
-    input, textarea, select {
-      padding: 8px;
+    input, select {
+      padding: 10px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 14px;
+      width: 100%;
     }
     button {
       background: #27ae60;
       color: white;
-      padding: 12px;
+      padding: 12px 18px;
       border: none;
       border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: 0.3s;
     }
     button:hover {
       background: #219150;
     }
     table {
-      width: 98%;
+      width: 100%;
       border-collapse: collapse;
       margin-top: 15px;
     }
     table th, table td {
       border: 1px solid #ddd;
       padding: 10px;
-      text-align: left;
+      text-align: center;
     }
     table th {
       background: #2c3e50;
       color: white;
     }
-    .no-data {
-      text-align: center;
-      color: #666;
-      padding: 15px;
-    }
-    .msg {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
+    .report-section {
+      margin-top: 30px;
     }
     .btn-clear {
       margin-top: 15px;
-      padding: 10px 15px;
       background: #e74c3c;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
     }
     .btn-clear:hover {
       background: #c0392b;
     }
-    .campo {
-  display: flex;
-  align-items: center; /* Alinha verticalmente */
-  gap: 10px; /* Espaço entre o label e o textarea */
-  margin-bottom: 15px;
-}
-
-.campo label {
-  width: 100px; /* largura fixa para alinhar com outros labels */
-  font-weight: bold;
-  
-}
-
-.campo textarea {
-  flex: 1; /* faz ocupar o resto do espaço */
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  resize: vertical;
-}

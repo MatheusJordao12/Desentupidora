@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/gestao.css">
+  <title>👷 Gestão de Equipe e Bases</title>
+  
+</head>
+<body>
+  <header>
+    <h1>👷 Gestão de Equipe e Bases</h1>
+  </header>
+
+  <nav>
+     <a href="emi.html">Emissão de Relatórios</a>
+    <a href="financeiro.html">Financeiro</a>
+    <a href="hist.html">Histórico de Atendimento</a>
+    <a href="CA.html">Cadastro de Atendimento</a>
+    <a href="ci.html">Cadastro de Clientes</a>
+    <a href="rc.html">Chamados</a> 
+    <a href="ag.html">Agenda</a>
+    <a href="segunda.html">Ordens</a>
+
+  </nav>
+
+  <main>
+    <h2>Cadastrar Técnico</h2>
+    <form id="formTecnico">
+      <div style="flex: 1">
+        <label for="nome">Nome do Técnico:</label>
+        <input type="text" id="nome" required>
+      </div>
+      <div style="flex: 1">
+        <label for="base">Base/Unidade:</label>
+        <input type="text" id="base" required>
+      </div>
+      <div style="flex: 1">
+        <label for="servicos">Serviços Realizados:</label>
+        <input type="number" id="servicos" min="0" required>
+      </div>
+      <div style="flex: 1">
+        <label for="faturamento">Faturamento (R$):</label>
+        <input type="number" id="faturamento" min="0" step="0.01" required>
+      </div>
+      <button type="submit">Adicionar Técnico</button>
+    </form>
+
+    <h2>Equipe Registrada</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Base</th>
+          <th>Serviços</th>
+          <th>Faturamento (R$)</th>
+        </tr>
+      </thead>
+      <tbody id="listaTecnicos">
+        <tr><td colspan="4">Nenhum técnico cadastrado</td></tr>
+      </tbody>
+    </table>
+
+    <button class="btn-clear" onclick="limparEquipe()">🗑️ Limpar Equipe</button>
+
+    <div class="report-section">
+      <h2>📊 Relatórios</h2>
+
+      <label for="filtroBase">Filtrar por Base:</label>
+      <select id="filtroBase">
+        <option value="">Todas</option>
+      </select>
+
+      <label for="filtroTecnico">Filtrar por Técnico:</label>
+      <select id="filtroTecnico">
+        <option value="">Todos</option>
+      </select>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Filtro</th>
+            <th>Total de Serviços</th>
+            <th>Total Faturado (R$)</th>
+          </tr>
+        </thead>
+        <tbody id="relatorio">
+          <tr><td colspan="3">Nenhum dado disponível</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("formTecnico");
+    const lista = document.getElementById("listaTecnicos");
+    const filtroBase = document.getElementById("filtroBase");
+    const filtroTecnico = document.getElementById("filtroTecnico");
+    const relatorio = document.getElementById("relatorio");
+
+    let equipe = JSON.parse(localStorage.getItem("equipe")) || [];
+
+    function salvarEquipe() {
+      localStorage.setItem("equipe", JSON.stringify(equipe));
+    }
+
+    function carregarEquipe() {
+      lista.innerHTML = "";
+      filtroBase.innerHTML = `<option value="">Todas</option>`;
+      filtroTecnico.innerHTML = `<option value="">Todos</option>`;
+
+      if (equipe.length === 0) {
+        lista.innerHTML = `<tr><td colspan="4">Nenhum técnico cadastrado</td></tr>`;
+        return;
+      }
+
+      equipe.forEach(t => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${t.nome}</td>
+          <td>${t.base}</td>
+          <td>${t.servicos}</td>
+          <td>${t.faturamento.toFixed(2)}</td>
+        `;
+        lista.appendChild(tr);
+      });
+
+      // Preencher filtros
+      const bases = [...new Set(equipe.map(t => t.base))];
+      bases.forEach(b => {
+        filtroBase.innerHTML += `<option value="${b}">${b}</option>`;
+      });
+
+      equipe.forEach(t => {
+        filtroTecnico.innerHTML += `<option value="${t.nome}">${t.nome}</option>`;
+      });
+
+      gerarRelatorio();
+    }
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const novo = {
+        nome: document.getElementById("nome").value,
+        base: document.getElementById("base").value,
+        servicos: parseInt(document.getElementById("servicos").value),
+        faturamento: parseFloat(document.getElementById("faturamento").value)
+      };
+
+      equipe.push(novo);
+      salvarEquipe();
+      form.reset();
+      carregarEquipe();
+    });
+
+    function limparEquipe() {
+      if (confirm("Deseja apagar toda a equipe?")) {
+        equipe = [];
+        salvarEquipe();
+        carregarEquipe();
+      }
+    }
+
+    function gerarRelatorio() {
+      relatorio.innerHTML = "";
+
+      let filtrado = [...equipe];
+      if (filtroBase.value) {
+        filtrado = filtrado.filter(t => t.base === filtroBase.value);
+      }
+      if (filtroTecnico.value) {
+        filtrado = filtrado.filter(t => t.nome === filtroTecnico.value);
+      }
+
+      if (filtrado.length === 0) {
+        relatorio.innerHTML = `<tr><td colspan="3">Nenhum dado disponível</td></tr>`;
+        return;
+      }
+
+      const totalServicos = filtrado.reduce((acc, t) => acc + t.servicos, 0);
+      const totalFaturamento = filtrado.reduce((acc, t) => acc + t.faturamento, 0);
+
+      relatorio.innerHTML = `
+        <tr>
+          <td>${filtroTecnico.value || filtroBase.value || "Geral"}</td>
+          <td>${totalServicos}</td>
+          <td>${totalFaturamento.toFixed(2)}</td>
+        </tr>
+      `;
+    }
+
+    filtroBase.addEventListener("change", gerarRelatorio);
+    filtroTecnico.addEventListener("change", gerarRelatorio);
+
+    carregarEquipe();
+  </script>
+</body>
+</html>
