@@ -18,7 +18,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       messageEl.style.color = "green";
       messageEl.textContent = "✅ Login bem-sucedido!";
       setTimeout(() => {
-        window.location.href = "segunda.html"; // Redireciona após login
+        window.location.href = "segunda.html"; // redireciona para página principal
       }, 1000);
     } else {
       messageEl.style.color = "red";
