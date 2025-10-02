@@ -37,7 +37,7 @@ const db = new sqlite3.Database(path.join(__dirname, "banco.db"), (err) => {
           else if (!row) {
             db.run(
               "INSERT INTO usuarios (username, password) VALUES (?, ?)",
-              ["admin", "123456"],
+              ["admin", "admin2025"],
               (err) => {
                 if (err) console.error(err.message);
                 else console.log("Usuário 'admin' criado com sucesso!");
