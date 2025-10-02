@@ -1,110 +1,117 @@
- body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 0;
-      margin: 0;
-    }
-    /* Barra de navegação */
-    nav {
-      background: #2c3e50;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      padding: 8px 12px;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    nav a:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
+body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    padding: 0;
+    margin: 0;
+}
 
-    h1, h2 {
-      text-align: center;
-      margin-top: 20px;
-    }
+nav {
+    background: #2c3e50;
+    border-radius: 0px 0px 10px 10px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0 7px 5px rgba(0,0,0,0.2);
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 4px 8px 4px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
 
-    form {
-      max-width: 500px;
-      margin: 20px auto;
-      padding: 15px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    form input, form select, form button {
-      width: 95%;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    form button {
-      background: #28a745;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    form button:hover {
-      background: #218838;
-    }
+nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
 
-    table {
-      border-collapse: collapse;
-      width: 90%;
-      margin: 0 auto 30px auto;
-      background: #fff;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background: #f2f2f2;
-    }
-    .btn-finalizar {
-      padding: 5px 10px;
-      border: none;
-      background: #007bff;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .btn-finalizar:hover {
-      background: #0056b3;
-    }
-    .btn-sair {
-  background-color: #2c3e50;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
-  transition: 0.3s;
-  margin-top: 5px;
-  margin-left: 5px;
+h1, h2 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+form {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+form input, form select, form button {
+    width: 95%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+form button {
+    margin-left: 9px;
+    background: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+form button:hover {
+    background: #218838;
+}
+
+form select{
+    width: 99% !important;
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin: 0 auto 30px auto;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+th {
+    background: #f2f2f2;
+}
+.btn-finalizar {
+    padding: 5px 10px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn-finalizar:hover {
+    background: #0056b3;
+}
+.btn-sair {
+background-color: #2c3e50;
+color: white;
+border: none;
+padding: 10px 18px;
+border-radius: 6px;
+cursor: pointer;
+font-size: 15px;
+font-weight: bold;
+transition: 0.3s;
+margin-top: 5px;
+margin-left: 5px;
 }
 
 .btn-sair:hover {
-  background-color: #34495e; /* um tom mais claro no hover */
-  
+background-color: #34495e; /* um tom mais claro no hover */
+
 }
 .btn-excluir{
-  background-color: red;
-  color: white;
-  border-radius: 5px;
-   border: none;
-   padding: 3px 8px;
+background-color: red;
+color: white;
+border-radius: 5px;
+border: none;
+padding: 3px 8px;
 }
     

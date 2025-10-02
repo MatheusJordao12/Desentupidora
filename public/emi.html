@@ -1,108 +1,106 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Relatórios</title>
-  <link rel="stylesheet" href="css/emi.css">
+    <meta charset="UTF-8">
+    <title>Relatórios</title>
+    <link rel="stylesheet" href="css/emi.css">
 </head>
 <body>
-
-  <h1>📊 Emissão de Relatórios</h1>
-  <nav>
-    <a href="segunda.html">Ordens</a>
-    <a href="financeiro.html">Financeiro</a>
-    <a href="hist.html">Histórico de Atendimento</a>
-    <a href="CA.html">Cadastro de Atendimento</a>
-    <a href="ci.html">Cadastro de Clientes</a>
-    <a href="rc.html">Chamados</a>
-    <a href="ag.html">Agenda</a>
-  </nav>
- 
-
-  <div class="form-container">
-    <h2>Adicionar Registro</h2>
-    <label>Cliente:</label>
-    <input type="text" id="cliente" placeholder="Nome do cliente">
-
-    <label>Serviço:</label>
-    <input type="text" id="servico" placeholder="Descrição do serviço">
-
-    <label>Valor (R$):</label>
-    <input type="number" id="valor" placeholder="Ex: 150">
-
-    <label>Status:</label>
-    <select id="status">
-      <option value="pendente">Pendente</option>
-      <option value="finalizado">Finalizado</option>
-    </select>
-
-    <button onclick="adicionarRegistro()">Adicionar</button>
-  </div>
-
-  <div class="report-container">
-    <h2>Relatório</h2>
-    <table id="tabelaRelatorio">
-      <thead>
-        <tr>
-          <th>Cliente</th>
-          <th>Serviço</th>
-          <th>Valor</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- registros entram aqui -->
-      </tbody>
-    </table>
+    <nav>
+        <a href="segunda.html">Ordens</a>
+        <a href="financeiro.html">Financeiro</a>
+        <a href="hist.html">Histórico de Atendimento</a>
+        <a href="CA.html">Cadastro de Atendimento</a>
+        <a href="ci.html">Cadastro de Clientes</a>
+        <a href="rc.html">Chamados</a>
+        <a href="ag.html">Agenda</a>
+    </nav>
     <br>
-    <button onclick="gerarPDF()">📄 Exportar para PDF</button>
-    <button onclick="window.print()">🖨️ Imprimir</button>
-  </div>
+    <h1>📊 Emissão de Relatórios</h1>
 
-  <script>
-    const registros = [];
+    <div class="form-container">
+        <h2>Adicionar Registro</h2>
+        <label>Cliente:</label>
+        <input type="text" id="cliente" placeholder="Nome do cliente">
 
-    function adicionarRegistro() {
-      const cliente = document.getElementById("cliente").value;
-      const servico = document.getElementById("servico").value;
-      const valor = document.getElementById("valor").value;
-      const status = document.getElementById("status").value;
+        <label>Serviço:</label>
+        <input type="text" id="servico" placeholder="Descrição do serviço">
 
-      if (cliente && servico && valor) {
-        registros.push({ cliente, servico, valor, status });
-        atualizarTabela();
-        limparFormulario();
-      } else {
-        alert("Preencha todos os campos!");
-      }
-    }
+        <label>Valor (R$):</label>
+        <input type="number" id="valor" placeholder="Ex: 150">
 
-    function atualizarTabela() {
-      const tbody = document.querySelector("#tabelaRelatorio tbody");
-      tbody.innerHTML = "";
+        <label>Status:</label>
+        <select id="status">
+        <option value="pendente">Pendente</option>
+        <option value="finalizado">Finalizado</option>
+        </select>
 
-      registros.forEach(r => {
-        const row = `<tr>
-          <td>${r.cliente}</td>
-          <td>${r.servico}</td>
-          <td>R$ ${r.valor}</td>
-          <td>${r.status}</td>
-        </tr>`;
-        tbody.innerHTML += row;
-      });
-    }
+        <button onclick="adicionarRegistro()">Adicionar</button>
+    </div>
 
-    function limparFormulario() {
-      document.getElementById("cliente").value = "";
-      document.getElementById("servico").value = "";
-      document.getElementById("valor").value = "";
-      document.getElementById("status").value = "pendente";
-    }
+    <div class="report-container">
+        <h2>Relatório</h2>
+        <table id="tabelaRelatorio">
+        <thead>
+            <tr>
+            <th>Cliente</th>
+            <th>Serviço</th>
+            <th>Valor</th>
+            <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- registros entram aqui -->
+        </tbody>
+        </table>
+        <br>
+        <button onclick="gerarPDF()">📄 Exportar para PDF</button>
+        <button onclick="window.print()">🖨️ Imprimir</button>
+    </div>
 
-    function gerarPDF() {
-      window.print(); // simples: usa o print para exportar em PDF
-    }
-  </script>
+    <script>
+        const registros = [];
 
+        function adicionarRegistro() {
+        const cliente = document.getElementById("cliente").value;
+        const servico = document.getElementById("servico").value;
+        const valor = document.getElementById("valor").value;
+        const status = document.getElementById("status").value;
+
+        if (cliente && servico && valor) {
+            registros.push({ cliente, servico, valor, status });
+            atualizarTabela();
+            limparFormulario();
+        } else {
+            alert("Preencha todos os campos!");
+        }
+        }
+
+        function atualizarTabela() {
+        const tbody = document.querySelector("#tabelaRelatorio tbody");
+        tbody.innerHTML = "";
+
+        registros.forEach(r => {
+            const row = `<tr>
+            <td>${r.cliente}</td>
+            <td>${r.servico}</td>
+            <td>R$ ${r.valor}</td>
+            <td>${r.status}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+        }
+
+        function limparFormulario() {
+        document.getElementById("cliente").value = "";
+        document.getElementById("servico").value = "";
+        document.getElementById("valor").value = "";
+        document.getElementById("status").value = "pendente";
+        }
+
+        function gerarPDF() {
+        window.print(); // simples: usa o print para exportar em PDF
+        }
+    </script>
 </body>
 </html>

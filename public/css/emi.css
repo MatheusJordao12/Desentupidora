@@ -1,85 +1,95 @@
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background: #f5f5f5;
-    }
+*{
+    padding: 0;
+    margin: 0;
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
 
-    .form-container, .report-container {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
 
-    label {
-      font-weight: bold;
-    }
+.form-container, .report-container {
+        margin: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
 
-    input, select {
-      margin: 5px 0 15px;
-      padding: 10px;
-      width: 98%;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
+label {
+    font-weight: bold;
+}
 
-    button {
-      padding: 10px 20px;
-      background: #2c3e50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
+input, select {
+    margin: 5px 0 15px;
+    padding: 10px;
+    width: 98%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
 
-    button:hover {
-      background: #2c3e50;
-    }
+#status {
+    width: 100%;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
+button {
+    padding: 10px 20px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+}
 
-    table, th, td {
-      border: 1px solid #ccc;
-    }
+button:hover {
+    background: #2c3e50;
+}
 
-    th, td {
-      padding: 10px;
-      text-align: left;
-    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
 
-    th {
-      background: #2c3e50;
-      color: white;
-    }
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: #2c3e50;
+    color: white;
+}
 nav {
-      background: #2c3e50;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      padding: 8px 12px;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    nav a:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
+    background: #2c3e50;
+    border-radius: 0px 0px 10px 10px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0 7px 5px rgba(0,0,0,0.2);
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

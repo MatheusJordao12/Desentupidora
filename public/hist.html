@@ -1,91 +1,86 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="css/hist.css">
-  <title>🕑 Histórico de Atendimento</title>
-
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/hist.css">
+    <title>🕑 Histórico de Atendimento</title>
 </head>
 <body>
-  <header>
+    <nav>
+        <a href="segunda.html">Ordens</a>
+        <a href="emi.html">Emissão de Relatórios</a>
+        <a href="financeiro.html">Financeiro</a>
+        <a href="CA.html">Cadastro de Atendimento</a>
+        <a href="ci.html">Cadastro de Clientes</a>
+        <a href="rc.html">Chamados</a>
+        <a href="ag.html">Agenda</a> 
+    </nav>
+    <br>
     <h1>🕑 Histórico de Atendimento</h1>
-  </header>
 
-  <nav>
-    <a href="segunda.html">Ordens</a>
-    <a href="emi.html">Emissão de Relatórios</a>
-    <a href="financeiro.html">Financeiro</a>
-    <a href="CA.html">Cadastro de Atendimento</a>
-    <a href="ci.html">Cadastro de Clientes</a>
-    <a href="rc.html">Chamados</a>
-    <a href="ag.html">Agenda</a>
-    
-  </nav>
-  
+    <main>
+        <h2>Adicionar Atendimento</h2>
+        <form id="formAtendimento">
+        <input type="text" id="cliente" placeholder="Nome do Cliente" required>
+        <textarea id="descricao" placeholder="Descrição do Atendimento" required></textarea>
+        <select id="status" required>
+            <option value="">Selecione o Status</option>
+            <option value="Concluído">✅ Concluído</option>
+            <option value="Pendente">⏳ Pendente</option>
+            <option value="Cancelado">❌ Cancelado</option>
+        </select>
+        <button type="submit">Adicionar Atendimento</button>
+        </form>
 
-  <main>
-    <h2>Adicionar Atendimento</h2>
-    <form id="formAtendimento">
-      <input type="text" id="cliente" placeholder="Nome do Cliente" required>
-      <textarea id="descricao" placeholder="Descrição do Atendimento" required></textarea>
-      <select id="status" required>
-        <option value="">Selecione o Status</option>
-        <option value="Concluído">✅ Concluído</option>
-        <option value="Pendente">⏳ Pendente</option>
-        <option value="Cancelado">❌ Cancelado</option>
-      </select>
-      <button type="submit">Adicionar Atendimento</button>
-    </form>
+        <h2>Lista de Atendimentos</h2>
+        <table id="tabelaAtendimentos">
+        <thead>
+            <tr>
+            <th>Data</th>
+            <th>Cliente</th>
+            <th>Descrição</th>
+            <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="listaAtendimentos">
+            <tr class="no-data"><td colspan="4">Nenhum atendimento registrado</td></tr>
+        </tbody>
+        </table>
+    </main>
 
-    <h2>Lista de Atendimentos</h2>
-    <table id="tabelaAtendimentos">
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Cliente</th>
-          <th>Descrição</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="listaAtendimentos">
-        <tr class="no-data"><td colspan="4">Nenhum atendimento registrado</td></tr>
-      </tbody>
-    </table>
-  </main>
+    <script>
+        const form = document.getElementById('formAtendimento');
+        const lista = document.getElementById('listaAtendimentos');
 
-  <script>
-    const form = document.getElementById('formAtendimento');
-    const lista = document.getElementById('listaAtendimentos');
+        form.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+        const cliente = document.getElementById('cliente').value.trim();
+        const descricao = document.getElementById('descricao').value.trim();
+        const status = document.getElementById('status').value;
 
-      const cliente = document.getElementById('cliente').value.trim();
-      const descricao = document.getElementById('descricao').value.trim();
-      const status = document.getElementById('status').value;
+        if (!cliente || !descricao || !status) return;
 
-      if (!cliente || !descricao || !status) return;
+        const data = new Date().toLocaleString('pt-BR');
 
-      const data = new Date().toLocaleString('pt-BR');
+        // Remove mensagem "Nenhum atendimento registrado"
+        const noData = lista.querySelector('.no-data');
+        if (noData) noData.remove();
 
-      // Remove mensagem "Nenhum atendimento registrado"
-      const noData = lista.querySelector('.no-data');
-      if (noData) noData.remove();
+        // Cria linha nova
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${data}</td>
+            <td>${cliente}</td>
+            <td>${descricao}</td>
+            <td>${status}</td>
+        `;
 
-      // Cria linha nova
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${data}</td>
-        <td>${cliente}</td>
-        <td>${descricao}</td>
-        <td>${status}</td>
-      `;
+        lista.appendChild(tr);
 
-      lista.appendChild(tr);
-
-      // Limpa o formulário
-      form.reset();
-    });
-  </script>
+        // Limpa o formulário
+        form.reset();
+        });
+    </script>
 </body>
 </html>

@@ -39,12 +39,11 @@
     margin-top: 5px;
     position: center;
     margin: 5px;
-   
-    
+    padding-left: 5px;
 }
 
 #loginForm input::placeholder {
-    padding-left: 10px;
+    padding-left: 5px;
     color: rgb(160, 160, 160);
    
     
